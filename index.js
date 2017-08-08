@@ -40,12 +40,12 @@ const handlers = {
         request.get('http://125.63.86.179/cgi-bin/relay.cgi?on').on('response',function(response){
             console.log(JSON.stringify(response));
             console.log(JSON.stringify(session));
-            session.emit(":ask",` ${Messages.LIGHTS_ON_MESSAGE}`);
+            session.emit(":tell",` ${Messages.LIGHTS_ON_MESSAGE}`);
         })
     },
     'SkillInformation': function () {
         console.log(`In  SkillInformation ${JSON.stringify(this)}`);
-        this.emit(':ask', `${Messages.SkillInformation} ${Messages.HELP_MSG_PAUSED}`,Messages.HELP_MSG);
+        this.emit(':tell', `${Messages.SkillInformation} ${Messages.HELP_MSG_PAUSED}`,Messages.HELP_MSG);
     },
     'AMAZON.CancelIntent': function () {
         console.log('Came in here in CancelIntent')
@@ -57,7 +57,7 @@ const handlers = {
     },
     'SessionEndedRequest': function () {
         console.log('Came in here in SessionEndedRequest calling AMAZON.StopIntent')
-        this.emit('AMAZON.StopIntent');
+        //this.emit('AMAZON.StopIntent');
     }
 };
 exports.handler = (event, context) => {
