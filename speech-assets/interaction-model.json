@@ -1,0 +1,22 @@
+{
+  "intents": [
+    {
+        "intent" : "WelcomeMessageIntent"
+    },
+    {
+        "intent" : "StartSwitch"
+    },
+    {
+        "intent" : "StopSwitch"
+    },
+    {
+        "intent" : "SkillInformation"
+    },
+    {
+        "intent" : "AMAZON.StopIntent"
+    },
+    {
+        "intent" : "AMAZON.CancelIntent"
+    }
+  ]
+}
