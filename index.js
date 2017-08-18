@@ -9,13 +9,15 @@ const envVariables = require ('./enviornmentVariables');
 
 const handlers = {
     'LaunchRequest' : function(){
+        let session = this;
         this.attributes['context'] = 'LaunchRequest';
         this.attributes['welcomeMessage'] = true;
-        this.emit(`WelcomeMessageIntent`); 
+        //this.emit(`WelcomeMessageIntent`); 
         console.log(`Here in WelcomeMessage Intent ${JSON.stringify(this)}`);
         //request.get('http://125.63.86.179/cgi-bin/relay.cgi?state').onRequestResponse(console.log('Hello'));
         request.get('http://125.63.86.179/cgi-bin/relay.cgi?state').on('response',function(response){
             console.log(JSON.stringify(response));
+            session.emit('StartSwitch');
         })
 
     },
@@ -30,7 +32,7 @@ const handlers = {
         request.get('http://125.63.86.179/cgi-bin/relay.cgi?off').on('response',function(response){
             console.log(JSON.stringify(response));
             console.log(JSON.stringify(session));
-            session.emit(":ask",` ${Messages.LIGHTS_OFF_MESSAGE}`);
+            session.emit(":tell",` ${Messages.LIGHTS_OFF_MESSAGE}`);
         });
     },
     'StartSwitch': function(){
@@ -45,7 +47,7 @@ const handlers = {
     },
     'SkillInformation': function () {
         console.log(`In  SkillInformation ${JSON.stringify(this)}`);
-        this.emit(':tell', `${Messages.SkillInformation} ${Messages.HELP_MSG_PAUSED}`,Messages.HELP_MSG);
+        this.emit(':tell', `${Messages.SkillInformation} `);
     },
     'AMAZON.CancelIntent': function () {
         console.log('Came in here in CancelIntent')
@@ -53,7 +55,7 @@ const handlers = {
     },
     'AMAZON.StopIntent': function () {
         console.log(`Came in here in StopIntent ${JSON.stringify(this)}`)
-        this.emit(':tell', `${Messages.STOP_MSG}`);
+        this.emit(':ask', `${Messages.STOP_MSG}`);
     },
     'SessionEndedRequest': function () {
         console.log('Came in here in SessionEndedRequest calling AMAZON.StopIntent')
